@@ -94,4 +94,25 @@ app.get('/consultar', (req, res) => {
     return makeRequest(req, res, constraint, 'consultarSaldo');
 });
 
+app.post('/pagar', (req, res) => {
+    const constraint = (obj) => {
+        obj('documento').required().isString();
+        obj('celular').required().isString();
+        obj('valor').required().isNumber();
+        obj('descripcion').required().isString();
+    };
+
+    return makeRequest(req, res, constraint, 'pagar');
+});
+
+app.post('/confirmar-pago', (req, res) => {
+    const constraint = (obj) => {
+        obj('token').required().isString();
+        obj('session').required().isString();
+    };
+
+    return makeRequest(req, res, constraint, 'confirmarPago');
+});
+
+
 module.exports = app;
