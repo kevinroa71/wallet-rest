@@ -33,8 +33,7 @@ function runValidator(validator) {
     return mensajes;
 }
 
-function makeRequest(req, res, constraint, method) {
-    const data = req.body;
+function makeRequest(data, res, constraint, method) {
     const validator = new Validator();
 
     validator(data).required().isObject(constraint);
@@ -72,7 +71,7 @@ app.post('/registro', (req, res) => {
         obj('celular').required().isString();
     };
 
-    return makeRequest(req, res, constraint, 'registroCliente');
+    return makeRequest(req.body, res, constraint, 'registroCliente');
 });
 
 app.put('/recargar', (req, res) => {
@@ -82,7 +81,7 @@ app.put('/recargar', (req, res) => {
         obj('valor').required().isNumber();
     };
 
-    return makeRequest(req, res, constraint, 'recargarBilletera');
+    return makeRequest(req.body, res, constraint, 'recargarBilletera');
 });
 
 app.get('/consultar', (req, res) => {
@@ -91,7 +90,7 @@ app.get('/consultar', (req, res) => {
         obj('celular').required().isString();
     };
 
-    return makeRequest(req, res, constraint, 'consultarSaldo');
+    return makeRequest(req.query, res, constraint, 'consultarSaldo');
 });
 
 app.post('/pagar', (req, res) => {
@@ -102,7 +101,7 @@ app.post('/pagar', (req, res) => {
         obj('descripcion').required().isString();
     };
 
-    return makeRequest(req, res, constraint, 'pagar');
+    return makeRequest(req.body, res, constraint, 'pagar');
 });
 
 app.post('/confirmar-pago', (req, res) => {
@@ -111,7 +110,7 @@ app.post('/confirmar-pago', (req, res) => {
         obj('session').required().isString();
     };
 
-    return makeRequest(req, res, constraint, 'confirmarPago');
+    return makeRequest(req.body, res, constraint, 'confirmarPago');
 });
 
 
